@@ -30,7 +30,9 @@ echo "::endgroup::"
 echo "::group::Checking service directory"
 if [ ! -d "golang/${SERVICE_NAME}" ]; then
     echo "::error::Directory golang/${SERVICE_NAME} does not exist"
-    exit 1
+    # Create the directory
+    mkdir -p golang/${SERVICE_NAME}
+    echo "Created directory golang/${SERVICE_NAME}"
 fi
 echo "Service directory exists: golang/${SERVICE_NAME}"
 echo "::endgroup::"
