@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/andrei-kozel/owly-proto/roles"
+option go_package = "github.com/andrei-kozel/owly-proto/roles";
 
 message Role {
     string id = 1;
