@@ -20,6 +20,13 @@ echo "::endgroup::"
 
 # Compile the .proto files
 echo "::group::Compiling .proto files"
+
+# Check if folder exists
+# If not, create it
+if [ ! -d "golang" ]; then
+    mkdir golang
+fi
+
 protoc --go_out=./golang --go_opt=paths=source_relative \
     --go-grpc_out=./golang --go-grpc_opt=paths=source_relative \
     ./${SERVICE_NAME}/*.proto
@@ -30,9 +37,7 @@ echo "::endgroup::"
 echo "::group::Checking service directory"
 if [ ! -d "golang/${SERVICE_NAME}" ]; then
     echo "::error::Directory golang/${SERVICE_NAME} does not exist"
-    # Create the directory
-    mkdir -p golang/${SERVICE_NAME}
-    echo "Created directory golang/${SERVICE_NAME}"
+    exit 1
 fi
 echo "Service directory exists: golang/${SERVICE_NAME}"
 echo "::endgroup::"
