@@ -63,9 +63,9 @@ for SERVICE_NAME in "${SERVICE_ARRAY[@]}"; do
 
     # Create a single tag for all services
     echo "::group::Creating single tag"
-    git tag -fa golang/${SERVICE_NAME}/v${RELEASE_VERSION} -m "Release v${RELEASE_VERSION}"
+    git tag -fa golang/${SERVICE_NAME}/${RELEASE_VERSION} -m "Release ${RELEASE_VERSION}"
     git push origin --tags
-    echo "Created and pushed tag golang/${SERVICE_NAME}/v${RELEASE_VERSION}"
+    echo "Created and pushed tag golang/${SERVICE_NAME}/${RELEASE_VERSION}"
     echo "::endgroup::"
 done
 
