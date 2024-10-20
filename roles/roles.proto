@@ -27,20 +27,6 @@ message DeleteRoleRequest {
     string id = 1;
 }
 
-message AssignRoleRequest {
-    string userId = 1;
-    string roleId = 2;
-}
-
-message RevokeRoleRequest {
-    string userId = 1;
-    string roleId = 2;
-}
-
-message GetRolesForUserRequest {
-    string userId = 1;
-}
-
 message GetRolesRequest {}
 
 message GetRolesResponse {
@@ -59,9 +45,6 @@ service RolesService {
     rpc CreateRole(CreateRoleRequest) returns (RoleResponse) {}
     rpc UpdateRole(UpdateRoleRequest) returns (RoleResponse) {}
     rpc DeleteRole(DeleteRoleRequest) returns (RoleResponse) {}
-    rpc AssignRole(AssignRoleRequest) returns (RoleResponse) {}
-    rpc RevokeRole(RevokeRoleRequest) returns (RoleResponse) {}
     rpc GetRoles(GetRolesRequest) returns (GetRolesResponse) {}
     rpc GetRole(GetRoleRequest) returns (GetRoleResponse) {}
-    rpc GetRolesForUser(GetRolesForUserRequest) returns (GetRolesResponse) {}
 }
