@@ -10,11 +10,14 @@ jobs:
   protoc:
     name: "Generate"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: ["roles", "users"]
     steps:
       - name: Install Go
         uses: actions/setup-go@v4
         with:
-          go-version: 1.23
+          go-version: 1.23.2
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -26,5 +29,5 @@ jobs:
         shell: bash
         run: |
           chmod +x "${GITHUB_WORKSPACE}/run.sh"
-          SERVICES="roles,users"
-          ./run.sh $SERVICES ${{ env.RELEASE_VERSION }} ${{ github.actor }} ${{ github.actor }}@users.noreply.github.com
+          ls -alh ${GITHUB_WORKSPACE}
+          ./run.sh ${{ matrix.service }} ${{ env.RELEASE_VERSION }} ${{ github.actor }} ${{ github.actor }}@users.noreply.github.com
