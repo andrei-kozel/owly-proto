@@ -45,11 +45,11 @@ for SERVICE_NAME in "${SERVICE_ARRAY[@]}"; do
 
     # Initialize and tidy the Go module for each service
     echo "::group::Go mod init and tidy for ${SERVICE_NAME}"
-    cd golang
+    cd golang/${SERVICE_NAME}
     go mod init github.com/andrei-kozel/owly-proto/golang/${SERVICE_NAME} || true
     go mod tidy
     echo "Go module initialized and tidied for ${SERVICE_NAME}"
-    cd ..
+    cd ../..
     echo "::endgroup::"
 done
 
