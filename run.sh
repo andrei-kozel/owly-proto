@@ -51,20 +51,22 @@ for SERVICE_NAME in "${SERVICE_ARRAY[@]}"; do
     echo "Go module initialized and tidied for ${SERVICE_NAME}"
     cd ../..
     echo "::endgroup::"
+
+    # Commit changes
+    echo "::group::Committing changes"
+    git config --global user.email "kozel.andrei.94@gmail.com"
+    git config --global user.name "Andrei Kozel"
+    git add .
+    git commit -am "proto update" || true
+    echo "Committed changes"
+    echo "::endgroup::"
+
+    # Create a single tag for all services
+    echo "::group::Creating single tag"
+    git tag -fa golang/${SERVICE_NAME}/v${RELEASE_VERSION} -m "Release v${RELEASE_VERSION}"
+    git push origin --tags
+    echo "Created and pushed tag golang/${SERVICE_NAME}/v${RELEASE_VERSION}"
+    echo "::endgroup::"
 done
 
-# Commit changes
-echo "::group::Committing changes"
-git config --global user.email "kozel.andrei.94@gmail.com"
-git config --global user.name "Andrei Kozel"
-git add .
-git commit -am "proto update" || true
-echo "Committed changes"
-echo "::endgroup::"
 
-# Create a single tag for all services
-echo "::group::Creating single tag"
-git tag -fa v${RELEASE_VERSION} -m "Release ${RELEASE_VERSION}"
-git push origin refs/tags/v${RELEASE_VERSION}
-echo "Created and pushed tag v${RELEASE_VERSION}"
-echo "::endgroup::"
