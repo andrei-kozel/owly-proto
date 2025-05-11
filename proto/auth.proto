@@ -1,0 +1,38 @@
+syntax = "proto3";
+option go_package = "github.com/andrei-kozel/owly-proto/go/auth/v1;auth";
+
+package auth;
+
+service AuthService {
+  rpc GetAuthURL(GetAuthURLRequest) returns (GetAuthURLResponse) {}
+  rpc ExchangeCode(ExchangeCodeRequest) returns (ExchangeCodeResponse) {}
+  rpc ValidateState(ValidateStateRequest) returns (ValidateStateResponse) {}
+}
+
+message GetAuthURLRequest {}
+
+message GetAuthURLResponse {
+  string auth_url = 1;
+  string state = 2;
+}
+
+message ExchangeCodeRequest {
+  string code = 1;
+  string state = 2;
+}
+
+message ExchangeCodeResponse {
+  string user_id = 1;
+  string username = 2;
+  string email = 3;
+  string access_token = 4;
+  string refresh_token = 5;
+}
+
+message ValidateStateRequest {
+  string state = 1;
+}
+
+message ValidateStateResponse {
+  bool is_valid = 1;
+}

@@ -1,0 +1,49 @@
+name: Generate Proto
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "proto/**/*.proto"
+      - "buf.yaml"
+      - "buf.gen.yaml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "proto/**/*.proto"
+      - "buf.yaml"
+      - "buf.gen.yaml"
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.21"
+
+      - name: Set up Buf
+        uses: bufbuild/buf-setup-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install protoc plugins for Go
+        run: |
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+
+      - name: Generate code with Buf
+        run: buf generate
+
+      - name: Commit changes
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add generated/
+          git commit -m "chore: regenerate proto code" -a || echo "No changes to commit"
+          git push

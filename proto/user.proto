@@ -1,0 +1,45 @@
+syntax = "proto3";
+option go_package = "github.com/andrei-kozel/owly-proto/go/user/v1;user";
+
+package user;
+
+service UserService {
+  rpc GetUser(GetUserRequest) returns (User) {}
+  rpc CreateUser(CreateUserRequest) returns (User) {}
+  rpc UpdateTokens(UpdateTokensRequest) returns (UpdateTokensResponse) {}
+}
+
+message GetUserRequest {
+  string twitch_id = 1;
+}
+
+message User {
+  string id = 1;
+  string twitch_id = 2;
+  string username = 3;
+  string email = 4;
+  string profile_image_url = 5;
+  int64 created_at = 6;
+  int64 updated_at = 7;
+}
+
+message CreateUserRequest {
+  string twitch_id = 1;
+  string username = 2;
+  string email = 3;
+  string access_token = 4;
+  string refresh_token = 5;
+  int64 token_expiry = 6;
+  string profile_image_url = 7;
+}
+
+message UpdateTokensRequest {
+  string user_id = 1;
+  string access_token = 2;
+  string refresh_token = 3;
+  int64 token_expiry = 4;
+}
+
+message UpdateTokensResponse {
+  bool success = 1;
+}
