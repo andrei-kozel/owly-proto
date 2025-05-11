@@ -44,6 +44,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add generated/
+          git add gen/
           git commit -m "chore: regenerate proto code" -a || echo "No changes to commit"
           git push
