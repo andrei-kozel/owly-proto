@@ -1,7 +1,5 @@
-module github.com/yourusername/yourrepo/gen/go
+module github.com/andrei-kozel/owly-proto/go
 
-go 1.22
-
-toolchain go1.23.9
+go 1.24.2
 
 require google.golang.org/protobuf v1.36.6

@@ -2,7 +2,12 @@
 
 # Generate Go code from proto files
 generate:
-	buf generate
+	buf generate && \
+    cd gen/go && \
+    if [ ! -f go.mod ]; then \
+        go mod init github.com/andrei-kozel/owly-proto/go; \
+    fi && \
+    go mod tidy
 
 # Lint proto files
 lint:
@@ -10,7 +15,7 @@ lint:
 
 # Clean generated files
 clean:
-	rm -rf generated/
+	rm -rf gen/
 
 # Install required tools
 install-tools:

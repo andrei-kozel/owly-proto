@@ -24,7 +24,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: "1.21"
+        go-version: "1.24"
 
       - name: Set up Buf
         uses: bufbuild/buf-setup-action@v1
@@ -39,10 +39,12 @@ jobs:
       - name: Generate code with Buf
         run: buf generate
 
-      - name: Go init and tidy
+      - name: Go mod init and tidy
         run: |
           cd gen/go
-          go mod init github.com/yourusername/yourrepo/gen/go
+          if [ ! -f go.mod ]; then
+            go mod init github.com/andrei-kozel/owly-proto/go
+          fi
           go mod tidy
 
       - name: Commit changes
